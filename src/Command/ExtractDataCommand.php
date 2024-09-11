@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\HttpClient\HttpClient;
 
 #[AsCommand(
     name: 'ExtractDataCommand',
@@ -16,34 +17,19 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class ExtractDataCommand extends Command
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    protected static $defaultName = 'app:extract-data';
 
-    protected function configure(): void
-    {
-        $this
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
-        ;
-    }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new SymfonyStyle($input, $output);
-        $arg1 = $input->getArgument('arg1');
+        $client = HttpClient::create();
+        $response = $client->request('GET', 'https://dummyjson.com/users');
+        $data = $response->toArray();
 
-        if ($arg1) {
-            $io->note(sprintf('You passed an argument: %s', $arg1));
-        }
+        $filename = 'data_' . date('Ymd') . '.json';
+        file_put_contents($filename, json_encode($data, JSON_PRETTY_PRINT));
 
-        if ($input->getOption('option1')) {
-            // ...
-        }
-
-        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
-
+        $output->writeln('Data extracted and saved to ' . $filename);
         return Command::SUCCESS;
     }
 }
