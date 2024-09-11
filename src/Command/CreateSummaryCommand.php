@@ -8,18 +8,41 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CreateSummaryCommand extends Command
 {
+
     protected static $defaultName = 'app:create-summary';
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        parent::__construct();
+        $this->entityManager = $entityManager;
+    }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $csvFilename = 'summary_' . date('Ymd') . '.csv';
-        $csvFile = fopen($csvFilename, 'w');
+        // Crear el resumen
+        $summary = new Summary();
+        $summary->setTotalUsers(100);  // Cambia este número por el total de usuarios reales
+        $summary->setExtractionDate(new \DateTime());
 
-        fputcsv($csvFile, ['Total Users', 'Extraction Date']);
-        fputcsv($csvFile, [100, date('Y-m-d')]);
+        $this->entityManager->persist($summary);
+        $this->entityManager->flush();
 
-        fclose($csvFile);
-        $output->writeln('Summary created and saved to ' . $csvFilename);
+        // Crear detalles
+        $data = json_decode(file_get_contents('data_' . date('Ymd') . '.json'), true);
+        foreach ($data['users'] as $user) {
+            $detail = new Detail();
+            $detail->setSummary($summary);
+            $detail->setUserId($user['id']);
+            $detail->setUserName($user['name']);
+            $detail->setUserEmail($user['email']);
+
+            $this->entityManager->persist($detail);
+        }
+
+        $this->entityManager->flush();
+
+        $output->writeln('Summary and details saved to the database.');
 
         return Command::SUCCESS;
     }
