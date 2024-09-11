@@ -2,47 +2,29 @@
 
 namespace App\Command;
 
-use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(
-    name: 'TransformDataCommand',
-    description: 'Add a short description for your command',
-)]
 class TransformDataCommand extends Command
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
-        ;
-    }
+    protected static $defaultName = 'app:transform-data';
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new SymfonyStyle($input, $output);
-        $arg1 = $input->getArgument('arg1');
+        $jsonFilename = 'data_' . date('Ymd') . '.json';
+        $csvFilename = 'ETL_' . date('Ymd') . '.csv';
 
-        if ($arg1) {
-            $io->note(sprintf('You passed an argument: %s', $arg1));
+        $data = json_decode(file_get_contents($jsonFilename), true);
+        $csvFile = fopen($csvFilename, 'w');
+
+        fputcsv($csvFile, ['ID', 'Name', 'Email']); // Cabeceras del CSV
+        foreach ($data['users'] as $user) {
+            fputcsv($csvFile, [$user['id'], $user['name'], $user['email']]);
         }
 
-        if ($input->getOption('option1')) {
-            // ...
-        }
-
-        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
+        fclose($csvFile);
+        $output->writeln('Data transformed and saved to ' . $csvFilename);
 
         return Command::SUCCESS;
     }
