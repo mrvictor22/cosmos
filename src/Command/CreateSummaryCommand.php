@@ -25,7 +25,8 @@ class CreateSummaryCommand extends Command
     {
         // Crear el resumen
         $summary = new Summary();
-        $summary->setTotalUsers(100);  // Cambia este número por el total de usuarios reales
+        $totalUsers = count($data['users']);
+        $summary->setTotalUsers($totalUsers);  // Cambia este número por el total de usuarios reales
         $summary->setExtractionDate(new \DateTime());
 
         $this->entityManager->persist($summary);

@@ -2,48 +2,52 @@
 
 namespace App\Command;
 
-use Symfony\Component\Console\Attribute\AsCommand;
+use phpseclib3\Net\SFTP;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(
-    name: 'UploadToSftpCommand',
-    description: 'Add a short description for your command',
-)]
 class UploadToSftpCommand extends Command
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
-        ;
-    }
+    protected static $defaultName = 'app:upload-to-sftp';
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new SymfonyStyle($input, $output);
-        $arg1 = $input->getArgument('arg1');
+        // Configuración del SFTP (puedes usar variables de entorno o directamente en el código)
+        $sftpHost = $_ENV['SFTP_HOST'];
+        $sftpUser = $_ENV['SFTP_USER'];
+        $sftpPassword = $_ENV['SFTP_PASSWORD'];
 
-        if ($arg1) {
-            $io->note(sprintf('You passed an argument: %s', $arg1));
+        // Crear una nueva conexión SFTP
+        $sftp = new SFTP($sftpHost);
+        if (!$sftp->login($sftpUser, $sftpPassword)) {
+            $output->writeln('Error: Login to SFTP failed.');
+            return Command::FAILURE;
         }
 
-        if ($input->getOption('option1')) {
-            // ...
+        $output->writeln('Conectado exitosamente al SFTP.');
+
+        
+        $files = [
+            'data_' . date('Ymd') . '.json',
+            'ETL_' . date('Ymd') . '.csv',
+            'summary_' . date('Ymd') . '.csv'
+        ];
+
+        foreach ($files as $file) {
+            if (!file_exists($file)) {
+                $output->writeln("Error: El archivo $file no existe.");
+                continue;
+            }
+            if (!$sftp->put($file, file_get_contents($file))) {
+                $output->writeln("Error: No se pudo subir el archivo $file.");
+                return Command::FAILURE;
+            } else {
+                $output->writeln("Archivo $file subido exitosamente.");
+            }
         }
 
-        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
-
+        $output->writeln('Todos los archivos fueron subidos exitosamente.');
         return Command::SUCCESS;
     }
 }
