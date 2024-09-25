@@ -3,22 +3,23 @@
 namespace App\Command;
 
 use phpseclib3\Net\SFTP;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'app:upload-to-sftp',
+    description: 'Uploads files to SFTP server'
+)]
 class UploadToSftpCommand extends Command
 {
-    protected static $defaultName = 'app:upload-to-sftp';
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        // Configuración del SFTP (puedes usar variables de entorno o directamente en el código)
         $sftpHost = $_ENV['SFTP_HOST'];
         $sftpUser = $_ENV['SFTP_USER'];
         $sftpPassword = $_ENV['SFTP_PASSWORD'];
 
-        // Crear una nueva conexión SFTP
         $sftp = new SFTP($sftpHost);
         if (!$sftp->login($sftpUser, $sftpPassword)) {
             $output->writeln('Error: Login to SFTP failed.');
@@ -27,7 +28,6 @@ class UploadToSftpCommand extends Command
 
         $output->writeln('Conectado exitosamente al SFTP.');
 
-        
         $files = [
             'data_' . date('Ymd') . '.json',
             'ETL_' . date('Ymd') . '.csv',

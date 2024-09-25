@@ -2,14 +2,17 @@
 
 namespace App\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'app:transform-data',
+    description: 'Transforms JSON data to CSV format'
+)]
 class TransformDataCommand extends Command
 {
-    protected static $defaultName = 'app:transform-data';
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $jsonFilename = 'data_' . date('Ymd') . '.json';
@@ -35,8 +38,8 @@ class TransformDataCommand extends Command
             return Command::FAILURE;
         }
 
-        fputcsv($csvFile, ['ID', 'Name', 'Email']); // headers of CSV
 
+        fputcsv($csvFile, ['ID', 'Name', 'Email']);
         foreach ($data['users'] as $user) {
             fputcsv($csvFile, [$user['id'], $user['name'], $user['email']]);
         }
@@ -47,4 +50,3 @@ class TransformDataCommand extends Command
         return Command::SUCCESS;
     }
 }
-
