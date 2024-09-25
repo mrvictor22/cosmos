@@ -1,33 +1,31 @@
-register,30
-gender,male,female,other
-"Gender Totals",13,17,0
-age,male,female,other
-00-10,0,0,0
-11-20,0,0,0
-21-30,2,10,0
-31-40,9,6,0
-41-50,2,1,0
-51-60,0,0,0
-61-70,0,0,0
-71-80,0,0,0
-81-90,0,0,0
-91+,0,0,0
-City,male,female,other
-Phoenix,0,2,0
-Houston,1,0,0
-Washington,0,1,0
-Seattle,1,0,0
-Jacksonville,0,2,0
-"Fort Worth",0,2,0
-Indianapolis,2,0,0
-"San Antonio",1,0,0
-"New York",2,1,0
-Denver,1,0,0
-Columbus,3,2,0
-"San Jose",1,0,0
-"San Diego",0,1,0
-Chicago,0,1,0
-Philadelphia,0,2,0
-Dallas,0,2,0
-"Los Angeles",1,0,0
-"San Francisco",0,1,0
+ID,"First Name","Last Name",Email,Age,Gender,City
+1,Emily,Johnson,emily.johnson@x.dummyjson.com,28,female,Phoenix
+2,Michael,Williams,michael.williams@x.dummyjson.com,35,male,Houston
+3,Sophia,Brown,sophia.brown@x.dummyjson.com,42,female,Washington
+4,James,Davis,james.davis@x.dummyjson.com,45,male,Seattle
+5,Emma,Miller,emma.miller@x.dummyjson.com,30,female,Jacksonville
+6,Olivia,Wilson,olivia.wilson@x.dummyjson.com,22,female,"Fort Worth"
+7,Alexander,Jones,alexander.jones@x.dummyjson.com,38,male,Indianapolis
+8,Ava,Taylor,ava.taylor@x.dummyjson.com,27,female,"Fort Worth"
+9,Ethan,Martinez,ethan.martinez@x.dummyjson.com,33,male,"San Antonio"
+10,Isabella,Anderson,isabella.anderson@x.dummyjson.com,31,female,"New York"
+11,Liam,Garcia,liam.garcia@x.dummyjson.com,29,male,Denver
+12,Mia,Rodriguez,mia.rodriguez@x.dummyjson.com,24,female,Jacksonville
+13,Noah,Hernandez,noah.hernandez@x.dummyjson.com,40,male,"New York"
+14,Charlotte,Lopez,charlotte.lopez@x.dummyjson.com,36,female,Columbus
+15,William,Gonzalez,william.gonzalez@x.dummyjson.com,32,male,"San Jose"
+16,Avery,Perez,avery.perez@x.dummyjson.com,25,female,Columbus
+17,Evelyn,Sanchez,evelyn.sanchez@x.dummyjson.com,37,female,"San Diego"
+18,Logan,Torres,logan.torres@x.dummyjson.com,31,male,Columbus
+19,Abigail,Rivera,abigail.rivera@x.dummyjson.com,28,female,Chicago
+20,Jackson,Evans,jackson.evans@x.dummyjson.com,34,male,"New York"
+21,Madison,Collins,madison.collins@x.dummyjson.com,26,female,Philadelphia
+22,Elijah,Stewart,elijah.stewart@x.dummyjson.com,33,male,Columbus
+23,Chloe,Morales,chloe.morales@x.dummyjson.com,39,female,Dallas
+24,Mateo,Nguyen,mateo.nguyen@x.dummyjson.com,30,male,Columbus
+25,Harper,Kelly,harper.kelly@x.dummyjson.com,27,female,Philadelphia
+26,Evelyn,Gonzalez,evelyn.gonzalez@x.dummyjson.com,35,female,Dallas
+27,Daniel,Cook,daniel.cook@x.dummyjson.com,41,male,"Los Angeles"
+28,Lily,Lee,lily.lee@x.dummyjson.com,29,female,Phoenix
+29,Henry,Hill,henry.hill@x.dummyjson.com,38,male,Indianapolis
+30,Addison,Wright,addison.wright@x.dummyjson.com,32,female,"San Francisco"

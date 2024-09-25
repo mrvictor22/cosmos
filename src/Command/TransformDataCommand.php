@@ -9,14 +9,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
     name: 'app:transform-data',
-    description: 'Transforms JSON data to CSV format as per the example given in the test'
+    description: 'Transforms JSON data to CSV format as per the example given in the test, point 3 of the test'
 )]
 class TransformDataCommand extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $jsonFilename = 'data_' . date('Ymd') . '.json';
-        $csvFilename = 'ETL_' . date('Ymd') . '.csv';
+        $csvFilename = 'summary_' . date('Ymd') . '.csv';
 
         if (!file_exists($jsonFilename)) {
             $output->writeln("Error: The file $jsonFilename does not exist.");
@@ -93,10 +93,10 @@ class TransformDataCommand extends Command
             $cityStats[$city][$gender]++;
         }
 
-        // Escribir las estadísticas en el archivo CSV
+      
         fputcsv($csvFile, ['register', $totalUsers]);
 
-        // Escribir estadísticas de género
+        
         fputcsv($csvFile, ['gender', 'male', 'female', 'other']);
         fputcsv($csvFile, [
             'Gender Totals',
