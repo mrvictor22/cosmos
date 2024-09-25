@@ -33,7 +33,7 @@ class CreateSummaryCommand extends Command
         $summary = new Summary();
         $totalUsers = count($data['users']);
         $summary->setTotalUsers($totalUsers);
-        $summary->setExtractionDate(new \DateTime()); // Insertion date
+        $summary->setExtractionDate(new \DateTime());
 
         $this->entityManager->persist($summary);
         $this->entityManager->flush();
@@ -46,9 +46,53 @@ class CreateSummaryCommand extends Command
                 while (($row = fgetcsv($handle)) !== false) {
                     $detail = new Detail();
                     $detail->setSummary($summary);
-                    $detail->setUserId($row[0]); // Asume que la primera columna es el ID
-                    $detail->setUserName($row[1]);
-                    $detail->setUserEmail($row[2]);
+                    $detail->setFirstName($row[1]);
+                    $detail->setLastName($row[2]);
+                    $detail->setEmail($row[3]);
+                    $detail->setAge((int)$row[4]);
+                    $detail->setGender($row[5]);
+                    $detail->setPhone($row[6]);
+                    $detail->setUsername($row[7]);
+                    $detail->setPassword($row[8]);
+                    $detail->setBirthDate(new \DateTime($row[9]));
+                    $detail->setImage($row[10]);
+                    $detail->setBloodGroup($row[11]);
+                    $detail->setHeight((float)$row[12]);
+                    $detail->setWeight((float)$row[13]);
+                    $detail->setEyeColor($row[14]);
+                    $detail->setHairColor($row[15]);
+                    $detail->setHairType($row[16]);
+                    $detail->setIp($row[17]);
+                    $detail->setAddress($row[18]);
+                    $detail->setCity($row[19]);
+                    $detail->setState($row[20]);
+                    $detail->setStateCode($row[21]);
+                    $detail->setPostalCode($row[22]);
+                    $detail->setCountry($row[23]);
+                    $detail->setMacAddress($row[24]);
+                    $detail->setUniversity($row[25]);
+                    $detail->setBankCardExpire($row[26]);
+                    $detail->setBankCardNumber($row[27]);
+                    $detail->setBankCardType($row[28]);
+                    $detail->setCurrency($row[29]);
+                    $detail->setIban($row[30]);
+                    $detail->setCompanyName($row[31]);
+                    $detail->setCompanyDepartment($row[32]);
+                    $detail->setCompanyTitle($row[33]);
+                    $detail->setCompanyAddress($row[34]);
+                    $detail->setCompanyCity($row[35]);
+                    $detail->setCompanyState($row[36]);
+                    $detail->setCompanyPostalCode($row[37]);
+                    $detail->setCompanyCountry($row[38]);
+                    $detail->setCompanyLat((float)$row[39]);
+                    $detail->setCompanyLng((float)$row[40]);
+                    $detail->setEin($row[41]);
+                    $detail->setSsn($row[42]);
+                    $detail->setUserAgent($row[43]);
+                    $detail->setCryptoCoin($row[44]);
+                    $detail->setCryptoWallet($row[45]);
+                    $detail->setCryptoNetwork($row[46]);
+                    $detail->setRole($row[47]);
 
                     $this->entityManager->persist($detail);
                 }

@@ -36,10 +36,18 @@ class TransformJsonToCsvCommand extends Command
             return Command::FAILURE;
         }
 
-        // Escribir encabezados al archivo CSV
-        fputcsv($csvFile, ['ID', 'First Name', 'Last Name', 'Email', 'Age', 'Gender', 'City']);
+        // Definir todas las cabeceras incluyendo propiedades anidadas
+        fputcsv($csvFile, [
+            'ID', 'First Name', 'Last Name', 'Email', 'Age', 'Gender', 'Phone', 'Username', 'Password',
+            'Birth Date', 'Image', 'Blood Group', 'Height', 'Weight', 'Eye Color', 'Hair Color', 'Hair Type',
+            'IP', 'Address', 'City', 'State', 'State Code', 'Postal Code', 'Country',
+            'MAC Address', 'University', 'Bank Card Expire', 'Bank Card Number', 'Bank Card Type', 'Currency', 'IBAN',
+            'Company Name', 'Company Department', 'Company Title', 'Company Address', 'Company City',
+            'Company State', 'Company Postal Code', 'Company Country', 'Company Coordinates (Lat)', 'Company Coordinates (Lng)',
+            'EIN', 'SSN', 'User Agent', 'Crypto Coin', 'Crypto Wallet', 'Crypto Network', 'Role'
+        ]);
 
-        // Escribir datos al archivo CSV
+        // Escribir datos en el archivo CSV
         foreach ($data['users'] as $user) {
             fputcsv($csvFile, [
                 $user['id'],
@@ -48,7 +56,48 @@ class TransformJsonToCsvCommand extends Command
                 $user['email'],
                 $user['age'],
                 $user['gender'],
-                $user['address']['city'] ?? 'Unknown'
+                $user['phone'] ?? 'N/A',
+                $user['username'] ?? 'N/A',
+                $user['password'] ?? 'N/A',
+                $user['birthDate'] ?? 'N/A',
+                $user['image'] ?? 'N/A',
+                $user['bloodGroup'] ?? 'N/A',
+                $user['height'] ?? 'N/A',
+                $user['weight'] ?? 'N/A',
+                $user['eyeColor'] ?? 'N/A',
+                $user['hair']['color'] ?? 'N/A',
+                $user['hair']['type'] ?? 'N/A',
+                $user['ip'] ?? 'N/A',
+                $user['address']['address'] ?? 'N/A',
+                $user['address']['city'] ?? 'N/A',
+                $user['address']['state'] ?? 'N/A',
+                $user['address']['stateCode'] ?? 'N/A',
+                $user['address']['postalCode'] ?? 'N/A',
+                $user['address']['country'] ?? 'N/A',
+                $user['macAddress'] ?? 'N/A',
+                $user['university'] ?? 'N/A',
+                $user['bank']['cardExpire'] ?? 'N/A',
+                $user['bank']['cardNumber'] ?? 'N/A',
+                $user['bank']['cardType'] ?? 'N/A',
+                $user['bank']['currency'] ?? 'N/A',
+                $user['bank']['iban'] ?? 'N/A',
+                $user['company']['name'] ?? 'N/A',
+                $user['company']['department'] ?? 'N/A',
+                $user['company']['title'] ?? 'N/A',
+                $user['company']['address']['address'] ?? 'N/A',
+                $user['company']['address']['city'] ?? 'N/A',
+                $user['company']['address']['state'] ?? 'N/A',
+                $user['company']['address']['postalCode'] ?? 'N/A',
+                $user['company']['address']['country'] ?? 'N/A',
+                $user['company']['address']['coordinates']['lat'] ?? 'N/A',
+                $user['company']['address']['coordinates']['lng'] ?? 'N/A',
+                $user['ein'] ?? 'N/A',
+                $user['ssn'] ?? 'N/A',
+                $user['userAgent'] ?? 'N/A',
+                $user['crypto']['coin'] ?? 'N/A',
+                $user['crypto']['wallet'] ?? 'N/A',
+                $user['crypto']['network'] ?? 'N/A',
+                $user['role'] ?? 'N/A'
             ]);
         }
 
