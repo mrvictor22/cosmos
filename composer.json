@@ -11,6 +11,8 @@
         "doctrine/doctrine-bundle": "^2.13",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.2",
+        "friendsofsymfony/rest-bundle": "^3.7",
+        "jms/serializer-bundle": "^5.4",
         "phpseclib/phpseclib": "^3.0",
         "symfony/console": "7.1.*",
         "symfony/dotenv": "7.1.*",
@@ -23,6 +25,7 @@
         "symfony/yaml": "7.1.*"
     },
     "require-dev": {
+        "symfony/debug-bundle": "7.1.*",
         "symfony/maker-bundle": "^1.61"
     },
     "config": {
@@ -70,7 +73,7 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
+            "allow-contrib": true,
             "require": "7.1.*"
         }
     }

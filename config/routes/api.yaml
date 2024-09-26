@@ -1,0 +1,3 @@
+api_summary:
+  path: /api/summary
+  controller: App\Controller\ApiController::getSummary

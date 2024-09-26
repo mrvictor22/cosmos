@@ -54,7 +54,7 @@ This command converts the extracted JSON data into a CSV file.
 Usage:
 
 ```
-php bin/console app:transform-data
+php bin/console app:transform-json-to-csv
 ```
 3. Upload to SFTP Command
 This command encrypts and uploads the CSV and JSON files to an SFTP server.
